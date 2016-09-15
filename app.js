@@ -36,7 +36,9 @@ app.get( '/', function( req, res ) {
 });
 app.use( express.static( 'node_modules/jquery/dist/') );
 
+// route for employee info
 app.route('/employee')
+	// add employee
 	.post((req,res) => {
 		console.log('/employee hit', req.body);
 		var first_name = req.body.first_name;
@@ -52,7 +54,9 @@ app.route('/employee')
 				res.send({success: true});
 			}
 		});
-	})
+	}) // end add employee
+
+	// retreive employee
 	.get(function(req, res){
 		console.log('/employee base hit');
 
@@ -72,7 +76,9 @@ app.route('/employee')
 				});
 		});
 
-	})
+	}) // end retrieve employee
+
+	// update employee
 	.put(function(req, res){
 		var data = req.body;
 
@@ -94,10 +100,11 @@ app.route('/employee')
 		      return res.status(200).send( { status: "Okay" });
 		    });
 		  });
-	});
+	}); // end update employee
 
 /* -- /booth Route -- */
 app.route( '/booth' )
+// get booth
 .get( ( req, res ) => {
 
 	  pg.connect( connectionString, ( err, client, done ) => {
@@ -117,7 +124,9 @@ app.route( '/booth' )
 	    });
 	  });
 
-})
+}) // end get booth
+
+// add booth
 .post( ( req, res ) => {
 
 	var data = req.body;
@@ -142,7 +151,9 @@ app.route( '/booth' )
 	    });
 	  });
 
- } )
+ } ) // end add booth
+
+ // update booth
 .put( ( req, res ) => {
 
 	var data = req.body;
@@ -167,4 +178,4 @@ app.route( '/booth' )
 	    });
 	  });
 
-} );
+} ); // end update booth

@@ -18,6 +18,12 @@ CREATE TABLE status (
 	status VARCHAR(12)
 );
 
+INSERT INTO server("first_name", "last_name", "status") VALUES('Cody', 'Ogden', TRUE) RETURNING "id", "first_name", "last_name", "status";
+INSERT INTO server("first_name", "last_name", "status") VALUES('Matt', 'S', TRUE) RETURNING "id", "first_name", "last_name", "status";
+INSERT INTO server("first_name", "last_name", "status") VALUES('Ben', 'J', TRUE) RETURNING "id", "first_name", "last_name", "status";
+INSERT INTO server("first_name", "last_name", "status") VALUES('Ben', 'M', TRUE) RETURNING "id", "first_name", "last_name", "status";
+
+=======
 INSERT INTO "public"."server"("first_name", "last_name", "status") VALUES('Cody', 'Ogden', TRUE) RETURNING "id", "first_name", "last_name", "status";
 INSERT INTO "public"."server"("first_name", "last_name", "status") VALUES('Matt', 'S', TRUE) RETURNING "id", "first_name", "last_name", "status";
 INSERT INTO "public"."server"("first_name", "last_name", "status") VALUES('Ben', 'J', TRUE) RETURNING "id", "first_name", "last_name", "status";

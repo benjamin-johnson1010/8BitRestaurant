@@ -52,8 +52,6 @@ app.post('/employee', function(req,res){
 		}
 	});
 
-
-});
 });
 
 /* -- /booth Route -- */
@@ -66,7 +64,7 @@ app.route( '/booth' )
 	    if( err ) res.status(500).send( "Oops!");
 
 	    var resultsArray = [];
-	    var query = client.query( 'SELECT * FROM booth ORDER BY id ASC' );
+	    var query = client.query( 'SELECT booth.id, booth.name, booth.capacity, booth.server_id, booth.status AS status_code, status.status AS status_name FROM booth JOIN status ON booth.status = status.id ORDER BY booth.id ASC' );
 
 	    query.on( 'row', ( row ) => {
 	      resultsArray.push( row );
@@ -91,7 +89,7 @@ app.route( '/booth' )
 	    if( err ) res.status(500).send( "Oops!");
 
 	    var resultsArray = [];
-	    var query = client.query( 'INSERT INTO "public"."booth"("capacity", "server_id", "status") VALUES($1, $2, 1);', [ data.capacity, data.serverId ] );
+	    var query = client.query( 'INSERT INTO "public"."booth"("capacity", "server_id", "name", "status") VALUES($1, $2, $3, 1);', [ data.capacity, data.serverId, data.name ] );
 
 	    query.on( 'row', ( row ) => {
 	      resultsArray.push( row );

@@ -85,10 +85,10 @@ var displayBooths = function() {
             var div = $('<div />');
 
             // Create a name element
-            var name = $('<span>' + data[i].name + '</span>');
+            var name = $('<span>Table Name: ' + data[i].name + ' - </span>');
 
             // Create a capacity element
-            var capacity = $('<span>' + data[i].capacity + '</span>');
+            var capacity = $('<span>Capacity: ' + data[i].capacity + ' - </span>');
 
             // Append that crap
             div.append( name ).append( capacity ).append( select( data[i].server_id, data[i].id ) );

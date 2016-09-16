@@ -121,7 +121,8 @@ var displayBooths = function() {
 
 // start doc ready
 $(document).ready(function(){
-  displayBooths()
+  displayBooths();
+  displayEmployees();
   console.log('muggles ready');
 
   // start on click
@@ -187,7 +188,7 @@ $(document).ready(function(){
         $('#employeesOutput').empty();
         for (var i = 0; i < data.length; i++) {
           var statusButton = '<button id="statusButton">' + data[i].status + '</button>';
-          $('#employeesOutput').append('<li>' + data[i].last_name + ', ' + data[i].first_name + ' ' + statusButton + '</li>');
+          $('#employeesOutput').append('<li>' + data[i].last_name + ', ' + data[i].first_name + ' </li>');
         }
         displayBooths();
       } // end success

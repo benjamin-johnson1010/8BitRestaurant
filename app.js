@@ -80,6 +80,8 @@ app.route('/employee')
 
 	// update employee
 	.put(function(req, res){
+
+		// Body Data
 		var data = req.body;
 
 		console.log( "Data Recieved:", data );
@@ -89,7 +91,7 @@ app.route('/employee')
 		    if( err ) res.status(500).send( "Oops!");
 
 		    var resultsArray = [];
-		    var query = client.query( 'UPDATE server SET "status"=$1 WHERE "id"=$2', [data.status,  data.id]);
+		    var query = client.query( 'UPDATE server SET "status"$=1 WHERE "id"=$2', [data.status,  data.id]);
 
 		    query.on( 'row', ( row ) => {
 		      resultsArray.push( row );

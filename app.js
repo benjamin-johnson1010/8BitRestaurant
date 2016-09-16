@@ -141,7 +141,7 @@ app.route( '/booth' )
 	    if( err ) res.status(500).send( "Oops!");
 
 	    var resultsArray = [];
-	    var query = client.query( 'INSERT INTO "public"."booth"("capacity", "name") VALUES($1, $2, 1);', [ data.capacity, data.name ] );
+	    var query = client.query( 'INSERT INTO "public"."booth"("capacity", "name", "status") VALUES($1, $2, 1);', [ data.capacity, data.name ] );
 
 	    query.on( 'row', ( row ) => {
 	      resultsArray.push( row );
@@ -168,7 +168,7 @@ app.route( '/booth' )
 	    if( err ) res.status(500).send( "Oops!");
 
 	    var resultsArray = [];
-	    var query = client.query( 'UPDATE "public"."booth" SET "server_id"=$1, "status"=$2 WHERE "id"=$3', [ data.serverId, data.status, data.id ] );
+	    var query = client.query( 'UPDATE "public"."booth" SET "server_id"=$1 WHERE "id"=$2', [ data.serverId, data.id ] );
 
 	    query.on( 'row', ( row ) => {
 	      resultsArray.push( row );

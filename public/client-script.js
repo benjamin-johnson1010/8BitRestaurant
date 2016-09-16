@@ -1,7 +1,127 @@
 console.log('sourced');
 
+var tableChangeHandler = function() {
+
+  console.log( $( this ).data('table-id') );
+  
+  $.ajax({
+    url: '/booth',
+    type: 'PUT',
+    dataType: 'json',
+    data: { id: $( this ).data('table-id'), serverId: $( this ).val() },
+  });
+  
+
+};
+
+var getserverSelection = function() {
+
+
+  
+  return select;
+
+};
+
+var displayBooths = function() {
+
+  console.log( "Display Booths" );
+
+  $.ajax({
+    url: '/employee',
+    type: 'GET',
+    dataType: 'json',
+    success: function( data ) {
+
+      console.log( "Got Employees" );
+
+      var select = function ( currentServer, tableId ) {
+
+      var thing = $("<select />", {class:'server-selection'});
+
+            thing.on( 'change', tableChangeHandler );
+            
+            for( var i = 0; i < data.length; i++ ) {
+              var option = $("<option />").val( data[i].first_name + " " + data[i].last_name ).html( data[i].first_name + " " + data[i].last_name );
+
+              if( data[i].id === currentServer ) option.attr("selected", "true");
+
+                  option.data( 'server-id', data[i].id );
+
+                  option.val( data[i].id );
+                  
+              thing.append( option );
+            }
+
+            thing.data( 'table-id', tableId );
+
+        return thing;
+
+
+      };
+
+      console.log( "Select", select );
+
+      console.log( "Employees select loop done" );
+
+    // Get all the booths
+      $.ajax({
+        url: '/booth',
+        type: 'GET',
+        dataType: 'json',
+        success: function( data ) {
+          // When I get them and they are sexy
+          console.log( "Sexy momma.", data );
+
+          // Empty the output
+          $('#tablesOutput').empty();
+
+          // Create a new container
+          var container = $("<div />", {class:'tables'});
+
+          // For every booth
+          for( var i = 0; i < data.length; i++ ) {
+
+            // Create a div
+            var div = $('<div />');
+
+            // Create a name element
+            var name = $('<span>' + data[i].name + '</span>');
+
+            // Create a capacity element
+            var capacity = $('<span>' + data[i].capacity + '</span>');
+
+            // Append that crap
+            div.append( name ).append( capacity ).append( select( data[i].server_id, data[i].id ) );
+
+            container.append( div );
+
+          }
+
+          console.log( "Container:", container );
+
+          $("#tablesOutput").append( container );
+        }
+      });
+
+
+
+
+    }
+
+
+
+
+
+  });
+
+  
+  
+
+};
+
 // start doc ready
 $(document).ready(function(){
+  displayBooths()
   console.log('muggles ready');
 
   // start on click
@@ -33,13 +153,28 @@ $(document).ready(function(){
   //start booth on click
   $('.createTable').on('click', function(){
     console.log( "in createTable" );
-    var objectToSend={
-      name: $('#nameIn').val(),
-      capacity: $('#capacityIn').val()
-    };
+    $.ajax({
+      url: '/booth',
+      type: 'POST',
+      dataType: 'json',
+      data: {
+          name: $('#nameIn').val(),
+          capacity: $('#capacityIn').val()
+      },
+      success: function() {
+
+        console.log( "I hate matt." );
+
+        $('#nameIn').val('');
+
+        displayBooths();
+
+      }
+    });
+    
     console.log( "create" );
   }); //end on click
-  
+
 }); // end doc ready
 
   var displayEmployees = function(){

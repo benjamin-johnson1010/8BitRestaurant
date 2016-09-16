@@ -2,7 +2,7 @@
 // Add Express
 var express = require('express');
 var app = express();
-
+var path = require('path');
 // Body Parser
 var bodyParser = require('body-parser');
 app.use( bodyParser.urlencoded({ extended: true }));
@@ -31,8 +31,29 @@ app.listen( port, function () {
 app.get( '/', function( req, res ) {
 
 	console.log( 'Base URL hit' );
-	res.send( 'public/index.html' );
+	res.sendFile(path.resolve( 'public/index.html' ));
 
+});
+app.use( express.static( 'node_modules/jquery/dist/') );
+
+app.post('/employee', function(req,res){
+	console.log('/employee hit', req.body);
+	var first_name = req.body.first_name;
+	var last_name = req.body.last_name;
+
+	pg.connect(connectionString, function(err, client, done){
+		if(err){
+			console.log(err);
+		} else {
+			console.log('connected to db');
+			console.log(first_name);
+			client.query('INSERT INTO server(first_name, last_name) VALUES($1, $2)', [first_name, last_name]);
+			res.send({success: true});
+		}
+	});
+
+
+});
 });
 
 /* -- /booth Route -- */
@@ -89,7 +110,6 @@ app.route( '/booth' )
 
 	console.log( "Data Recieved:", data );
 
-	var objectToSend= {}; //end objectToSend
 	  pg.connect( connectionString, ( err, client, done ) => {
 
 	    if( err ) res.status(500).send( "Oops!");

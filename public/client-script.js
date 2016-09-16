@@ -29,6 +29,16 @@ $(document).ready(function(){
 
      }); // end ajax call
   });   // end on click
+
+  //start booth on click
+  $('.createTable').on('click', function(){
+    console.log( "in createTable" );
+    var objectToSend={
+      name: $('#nameIn').val(),
+      capacity: $('#capacityIn').val()
+    };
+    console.log( "create" );
+  }); //end on click
   
 }); // end doc ready
 

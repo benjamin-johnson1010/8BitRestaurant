@@ -56,7 +56,7 @@ app.route('/employee')
 		});
 	}) // end add employee
 
-	// retreive employee
+	// retrieve employee
 	.get(function(req, res){
 		console.log('/employee base hit');
 
@@ -141,7 +141,7 @@ app.route( '/booth' )
 	    if( err ) res.status(500).send( "Oops!");
 
 	    var resultsArray = [];
-	    var query = client.query( 'INSERT INTO "public"."booth"("capacity", "server_id", "status") VALUES($1, $2, 1);', [ data.capacity, data.serverId ] );
+	    var query = client.query( 'INSERT INTO "public"."booth"("capacity", "name") VALUES($1, $2, 1);', [ data.capacity, data.name ] );
 
 	    query.on( 'row', ( row ) => {
 	      resultsArray.push( row );
